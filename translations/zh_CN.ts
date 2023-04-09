@@ -30,9 +30,9 @@
 <context>
     <name>GlobalSettings</name>
     <message>
-        <location filename="../src/qml/GlobalSettings.qml" line="31"/>
-        <source>Baidu</source>
-        <translation>百度</translation>
+        <location filename="../src/qml/GlobalSettings.qml" line="16"/>
+        <source>Bing</source>
+        <translation>必应</translation>
     </message>
 </context>
 <context>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../src/qml/SettingsPages/Custom.qml" line="90"/>
         <source>Search engine url,Replace the keyword with {keyword}</source>
-        <translation>搜索引擎地址，用{keyword}代替关键词</translation>
+        <translation>搜索引擎地址，用{KeyWord}代替关键词</translation>
     </message>
 </context>
 <context>
@@ -215,6 +215,11 @@
         <location filename="../src/qml/Terminal.qml" line="221"/>
         <source>Settings</source>
         <translation>设置</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/main.qml" line="36"/>
+        <source>Terminal</source>
+        <translation>终端</translation>
     </message>
 </context>
 </TS>

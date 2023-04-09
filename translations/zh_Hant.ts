@@ -30,9 +30,9 @@
 <context>
     <name>GlobalSettings</name>
     <message>
-        <location filename="../src/qml/GlobalSettings.qml" line="31"/>
-        <source>Baidu</source>
-        <translation>百度</translation>
+        <location filename="../src/qml/GlobalSettings.qml" line="16"/>
+        <source>Bing</source>
+        <translation>必应</translation>
     </message>
 </context>
 <context>

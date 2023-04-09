@@ -1,22 +1,7 @@
-/*
- * Copyright (C) 2021 CuteOS Team.
- *
- * Author:     Reion Wong <reionwong@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ * New CuteOS terminal
+ * Copyright 2023 CuteOS Team
  */
-
 import QtQuick 2.12
 import QtQml.Models 2.12
 import QtQuick.Controls 2.12
@@ -38,11 +23,33 @@ CuteUI.Window {
 
     background.color: CuteUI.Theme.darkMode ? settings.darkbackgroundColor : settings.lightbackgroundColor
     background.opacity: root.compositing ? settings.opacity : 1
+//    background.opacity: rootWindow.compositing ? 0.95 : 1.0
     header.height: 40
 
     property int currentIndex: -1
     property alias currentItem: _tabView.currentItem
     readonly property QMLTermWidget currentTerminal: currentItem ? currentItem.terminal : null
+
+    // MenuBar {
+    //     id: menuBar
+
+    //     Menu {
+    //         id: helpMenu
+    //         title: qsTr("Help")
+
+    //         MenuItem {
+    //             text: qsTr("About Terminal")
+    //             onTriggered: aboutDialog.show()
+    //         }
+    //     }
+    // }
+
+    // CuteUI.AboutDialog {
+    //     id: aboutDialog
+    //     name: root.title
+    //     description: qsTr("CuteOS terminal simulator")
+    //     iconSource: "image://icontheme/cute-terminal"
+    // }
 
     ExitPromptDialog {
         id: exitPrompt
