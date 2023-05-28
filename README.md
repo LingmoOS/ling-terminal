@@ -1,6 +1,6 @@
-# CuteOS Terminal
+# LingmoOS Terminal
 
-A terminal emulator for Cute.
+Terminal emulator using LingmoUI as interface style on LingmoOS.
 
 ### Third Party Code
 

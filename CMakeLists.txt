@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(PROJECT_NAME cute-terminal)
+set(PROJECT_NAME ling-terminal)
 project(${PROJECT_NAME})
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -19,7 +19,7 @@ if(NOT QT_QMAKE_EXECUTABLE)
     message(FATAL_ERROR "qmake is not found.")
 endif()
 
-execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_QML
+exeling_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_QML
     OUTPUT_VARIABLE INSTALL_QMLDIR
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
@@ -55,12 +55,12 @@ file(GLOB TS_FILES translations/*.ts)
 qt5_create_translation(QM_FILES ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES} SOURCES ${TS_FILES})
 add_dependencies(${PROJECT_NAME} translations)
-install(FILES ${QM_FILES} DESTINATION /usr/share/cute-terminal/translations)
+install(FILES ${QM_FILES} DESTINATION /usr/share/ling-terminal/translations)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION /usr/bin)
 
 install(FILES
-    cute-terminal.desktop
+    ling-terminal.desktop
     DESTINATION /usr/share/applications/
     COMPONENT Runtime
 )

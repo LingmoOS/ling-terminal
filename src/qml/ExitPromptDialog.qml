@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 CuteOS Team.
+ * Copyright (C) 2021 LingmoOS Team.
  *
  * Author:     Reion Wong <reionwong@gmail.com>
  *
@@ -21,13 +21,13 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
-import CuteUI 1.0 as CuteUI
+import LingmoUI 1.0 as LingmoUI
 
-CuteUI.Window {
+LingmoUI.Window {
     id: control
 
-    property var contentWidth: _mainLayout.implicitWidth + CuteUI.Units.largeSpacing * 2
-    property var contentHeight: _mainLayout.implicitHeight + header.height + CuteUI.Units.largeSpacing * 2
+    property var contentWidth: _mainLayout.implicitWidth + LingmoUI.Units.largeSpacing * 2
+    property var contentHeight: _mainLayout.implicitHeight + header.height + LingmoUI.Units.largeSpacing * 2
 
     flags: Qt.WindowStaysOnTopHint | Qt.Dialog | Qt.FramelessWindowHint
     modality: Qt.WindowModal
@@ -41,22 +41,22 @@ CuteUI.Window {
     maximumHeight: contentHeight
     minimizeButtonVisible: false
 
-    background.color: CuteUI.Theme.secondBackgroundColor
+    background.color: LingmoUI.Theme.secondBackgroundColor
 
     signal okBtnClicked
 
     ColumnLayout {
         id: _mainLayout
         anchors.fill: parent
-        spacing: CuteUI.Units.largeSpacing
-        anchors.margins: CuteUI.Units.largeSpacing
+        spacing: LingmoUI.Units.largeSpacing
+        anchors.margins: LingmoUI.Units.largeSpacing
 
         Label {
             text: qsTr("Process is running, are you sure you want to quit?")
         }
 
         RowLayout {
-            spacing: CuteUI.Units.largeSpacing
+            spacing: LingmoUI.Units.largeSpacing
 
             Button {
                 text: qsTr("Cancel")

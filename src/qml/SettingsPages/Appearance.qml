@@ -2,25 +2,25 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
-import CuteUI 1.0 as CuteUI
+import LingmoUI 1.0 as LingmoUI
 ItemPage {
     headerTitle: qsTr("Appearance")
     ScrollView {
         anchors.fill: parent
-        anchors.margins: CuteUI.Units.largeSpacing
+        anchors.margins: LingmoUI.Units.largeSpacing
     ColumnLayout {
         id: _mainLayout
         anchors.fill: parent
-        anchors.bottomMargin: CuteUI.Units.largeSpacing
+        anchors.bottomMargin: LingmoUI.Units.largeSpacing
         RoundedItem {
             Label {
                 text: qsTr("Font")
-                color: CuteUI.Theme.disabledTextColor
+                color: LingmoUI.Theme.disabledTextColor
             }
             GridLayout{
                 columns: 2
-                columnSpacing: CuteUI.Units.smallSpacing
-                rowSpacing: CuteUI.Units.smallSpacing
+                columnSpacing: LingmoUI.Units.smallSpacing
+                rowSpacing: LingmoUI.Units.smallSpacing
         Label {
             text: qsTr("Font")
         }
@@ -69,12 +69,12 @@ ItemPage {
         RoundedItem {
             Label {
                 text: qsTr("Color Scheme")
-                color: CuteUI.Theme.disabledTextColor
+                color: LingmoUI.Theme.disabledTextColor
             }
             GridLayout{
                 columns: 2
-                columnSpacing: CuteUI.Units.smallSpacing
-                rowSpacing: CuteUI.Units.smallSpacing
+                columnSpacing: LingmoUI.Units.smallSpacing
+                rowSpacing: LingmoUI.Units.smallSpacing
         Label {
             text: qsTr("Light Color Scheme")
         }
@@ -122,7 +122,7 @@ ItemPage {
         RoundedItem {
             Label {
                 text: qsTr("Keyboard Cursor")
-                color: CuteUI.Theme.disabledTextColor
+                color: LingmoUI.Theme.disabledTextColor
             }
             ColumnLayout{
 
@@ -168,12 +168,12 @@ ItemPage {
         RoundedItem {
             Label {
                 text: qsTr("Window effects")
-                color: CuteUI.Theme.disabledTextColor
+                color: LingmoUI.Theme.disabledTextColor
             }
             GridLayout{
                 columns: 2
-                columnSpacing: CuteUI.Units.smallSpacing *2
-                rowSpacing: CuteUI.Units.smallSpacing *2
+                columnSpacing: LingmoUI.Units.smallSpacing *2
+                rowSpacing: LingmoUI.Units.smallSpacing *2
         Label {
             text: qsTr("Transparency")
         }

@@ -2,23 +2,23 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
-import CuteUI 1.0 as CuteUI
+import LingmoUI 1.0 as LingmoUI
 ItemPage {
     headerTitle: qsTr("Bookmark")
     ScrollView {
         anchors.fill: parent
-        anchors.margins: CuteUI.Units.largeSpacing
+        anchors.margins: LingmoUI.Units.largeSpacing
     ColumnLayout {
         id: _mainLayout
         anchors.fill: parent
-        anchors.bottomMargin: CuteUI.Units.largeSpacing
+        anchors.bottomMargin: LingmoUI.Units.largeSpacing
         RoundedItem {
             Label {
                 text: qsTr("Bookmark")
-                color: CuteUI.Theme.disabledTextColor
+                color: LingmoUI.Theme.disabledTextColor
             }
             ColumnLayout{
-                spacing: CuteUI.Units.smallSpacing
+                spacing: LingmoUI.Units.smallSpacing
                 Repeater {
                     model: settings.bookmark
                     delegate: RowLayout{
@@ -34,7 +34,7 @@ ItemPage {
                             flat: true
                             width: height
                             implicitWidth: height
-                            icon.source: CuteUI.Theme.darkMode ? "qrc:/images/light/close.svg" : "qrc:/images/dark/close.svg"
+                            icon.source: LingmoUI.Theme.darkMode ? "qrc:/images/light/close.svg" : "qrc:/images/dark/close.svg"
                             onClicked: {
                                 var mbm = settings.bookmark;
                                 mbm.splice(index, 1)
@@ -56,7 +56,7 @@ ItemPage {
                         flat: true
                         width: height
                         implicitWidth: height
-                        icon.source: CuteUI.Theme.darkMode ? "qrc:/images/light/add.svg" : "qrc:/images/dark/add.svg"
+                        icon.source: LingmoUI.Theme.darkMode ? "qrc:/images/light/add.svg" : "qrc:/images/dark/add.svg"
                         onClicked: {
                             var mbm = settings.bookmark;
                             mbm.push(_dirurl.text)

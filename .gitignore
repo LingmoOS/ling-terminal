@@ -92,5 +92,5 @@ CMakeLists.txt.user*
 
 .vscode/
 debian/.debhelper
-debian/cute-terminal/*
+debian/ling-terminal/*
 obj-x86_64-linux-gnu

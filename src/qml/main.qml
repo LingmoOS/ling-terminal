@@ -1,6 +1,6 @@
 /**
- * New CuteOS terminal
- * Copyright 2023 CuteOS Team
+ * New LingmoOS terminal
+ * Copyright 2023 LingmoOS Team
  */
 import QtQuick 2.12
 import QtQml.Models 2.12
@@ -8,10 +8,10 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 
-import Cute.TermWidget 1.0
-import CuteUI 1.0 as CuteUI
+import Lingmo.TermWidget 1.0
+import LingmoUI 1.0 as LingmoUI
 
-CuteUI.Window {
+LingmoUI.Window {
     id: root
     minimumWidth: 400
     minimumHeight: 300
@@ -21,7 +21,7 @@ CuteUI.Window {
 
     GlobalSettings { id: settings }
 
-    background.color: CuteUI.Theme.darkMode ? settings.darkbackgroundColor : settings.lightbackgroundColor
+    background.color: LingmoUI.Theme.darkMode ? settings.darkbackgroundColor : settings.lightbackgroundColor
     background.opacity: root.compositing ? settings.opacity : 1
 //    background.opacity: rootWindow.compositing ? 0.95 : 1.0
     header.height: 40
@@ -44,11 +44,11 @@ CuteUI.Window {
     //     }
     // }
 
-    // CuteUI.AboutDialog {
+    // LingmoUI.AboutDialog {
     //     id: aboutDialog
     //     name: root.title
-    //     description: qsTr("CuteOS terminal simulator")
-    //     iconSource: "image://icontheme/cute-terminal"
+    //     description: qsTr("LingmoOS terminal simulator")
+    //     iconSource: "image://icontheme/ling-terminal"
     // }
 
     ExitPromptDialog {
@@ -69,7 +69,7 @@ CuteUI.Window {
         id: settingsDialog
     }
 
-    CuteUI.WindowBlur {
+    LingmoUI.WindowBlur {
         view: root
         geometry: Qt.rect(root.x, root.y, root.width, root.height)
         windowRadius: root.background.radius
@@ -95,22 +95,22 @@ CuteUI.Window {
     }
 
     headerItem: Item {
-        CuteUI.TabBar {
+        LingmoUI.TabBar {
             id: _tabbar
             anchors.fill: parent
-            anchors.margins: CuteUI.Units.smallSpacing / 2
-            anchors.rightMargin: CuteUI.Units.largeSpacing * 4
+            anchors.margins: LingmoUI.Units.smallSpacing / 2
+            anchors.rightMargin: LingmoUI.Units.largeSpacing * 4
 
             currentIndex: _tabView.currentIndex
             model: _tabView.count
 
             onNewTabClicked: openNewTab()
 
-            delegate: CuteUI.TabButton {
+            delegate: LingmoUI.TabButton {
                 id: _tabBtn
                 text: _tabView.contentModel.get(index).title
                 Layout.fillHeight: true
-                height: _tabbar.height - CuteUI.Units.smallSpacing / 2
+                height: _tabbar.height - LingmoUI.Units.smallSpacing / 2
                 width: Math.min(_tabbar.width / _tabbar.count,
                                 _tabBtn.contentWidth)
 
@@ -139,7 +139,7 @@ CuteUI.Window {
 //                id: _repeater
 //                model: _tabView.count
 
-//                CuteUI.TabButton {
+//                LingmoUI.TabButton {
 //                    id: _tabBtn
 //                    text: _tabView.contentModel.get(index).title
 //                    implicitHeight: parent.height
@@ -176,7 +176,7 @@ CuteUI.Window {
     ColumnLayout {
         anchors.fill: parent
 
-        CuteUI.TabView {
+        LingmoUI.TabView {
             id: _tabView
             Layout.fillWidth: true
             Layout.fillHeight: true

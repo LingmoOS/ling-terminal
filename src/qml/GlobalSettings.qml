@@ -1,6 +1,6 @@
 /**
- * New CuteOS terminal
- * Copyright 2023 CuteOS Team
+ * New LingmoOS terminal
+ * Copyright 2023 LingmoOS Team
  */
 import QtQuick 2.0
 import Qt.labs.settings 1.0
@@ -16,8 +16,8 @@ Settings {
     property var searchUrl: [[qsTr("Bing"),"https://cn.bing.com/search?from=MOZLBR&pc=MOZI&q={KeyWord}"]]
     property var bookmark: []
     property string wordCharacters: ":@-./_~,"
-    property var colorschemes: ["Cute-Light","Cute-Dark","BlackOnLightYellow","BlackOnRandomLight","BlackOnWhite","Tango","Ubuntu","Solarized","SolarizedLight"]
-    property string lightcolorScheme: "Cute-Light"
+    property var colorschemes: ["Lingmo-Light","Lingmo-Dark","BlackOnLightYellow","BlackOnRandomLight","BlackOnWhite","Tango","Ubuntu","Solarized","SolarizedLight"]
+    property string lightcolorScheme: "Lingmo-Light"
     property string darkcolorScheme: "Tango"
     property color lightbackgroundColor : "#F3F4F9"
     property color darkbackgroundColor : "#1C1C1D"

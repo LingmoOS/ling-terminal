@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 CuteOS Team.
+ * Copyright (C) 2023 LingmoOS Team.
  *
  * Author:     Reion Wong <reionwong@gmail.com>
  *
@@ -34,14 +34,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     QApplication app(argc, argv);
-    app.setOrganizationName("cuteos");
+    app.setOrganizationName("lingmoos");
     app.setWindowIcon(QIcon::fromTheme("terminal"));
 
     QQmlApplicationEngine engine;
 
     // Translations
     QLocale locale;
-    QString qmFilePath = QString("%1/%2.qm").arg("/usr/share/cute-terminal/translations/").arg(locale.name());
+    QString qmFilePath = QString("%1/%2.qm").arg("/usr/share/ling-terminal/translations/").arg(locale.name());
     if (QFile::exists(qmFilePath)) {
         QTranslator *translator = new QTranslator(QGuiApplication::instance());
         if (translator->load(qmFilePath)) {

@@ -1,3 +1,0 @@
-module Cute.TermWidget
-plugin cuteqmltermwidget
-QMLTermScrollbar 1.0 QMLTermScrollbar.qml
