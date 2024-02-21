@@ -1,33 +1,40 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_NAME ling-terminal)
-project(${PROJECT_NAME})
+project(ling-terminal)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(ECM REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
 
 set(QT Core Gui Quick QuickControls2 Widgets DBus LinguistTools)
 find_package(Qt5 REQUIRED ${QT})
 
 # Get the installation directory from qmake
-get_target_property(QT_QMAKE_EXECUTABLE ${Qt5Core_QMAKE_EXECUTABLE} IMPORTED_LOCATION)
-if(NOT QT_QMAKE_EXECUTABLE)
-    message(FATAL_ERROR "qmake is not found.")
-endif()
+#get_target_property(QT_QMAKE_EXECUTABLE ${Qt5Core_QMAKE_EXECUTABLE} IMPORTED_LOCATION)
+#if(NOT QT_QMAKE_EXECUTABLE)
+#    message(FATAL_ERROR "qmake is not found.")
+#endif()
+#
+#execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_QML
+#    OUTPUT_VARIABLE INSTALL_QMLDIR
+#    OUTPUT_STRIP_TRAILING_WHITESPACE
+#)
+#if(INSTALL_QMLDIR)
+#    message(STATUS "qml directory:" "${INSTALL_QMLDIR}")
+#else()
+#    message(FATAL_ERROR "qml directory cannot be detected.")
+#endif()
 
-execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_QML
-    OUTPUT_VARIABLE INSTALL_QMLDIR
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-if(INSTALL_QMLDIR)
-    message(STATUS "qml directory:" "${INSTALL_QMLDIR}")
-else()
-    message(FATAL_ERROR "qml directory cannot be detected.")
-endif()
+# Using New one
+include(ECMQueryQt)
+ecm_query_qt(INSTALL_QMLDIR QT_INSTALL_QML)
 
 set(SRCS
     src/main.cpp
@@ -42,7 +49,17 @@ set(RESOURCES
 )
 
 add_subdirectory(qmltermwidget)
+
 add_executable(${PROJECT_NAME} ${SRCS} ${RESOURCES})
+
+file(GLOB TS_FILES translations/*.ts)
+foreach(filepath ${TS_FILES})
+    string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/" "" filename ${filepath})
+    list(APPEND ts_files_replaced ${filename})
+endforeach()
+qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${ts_files_replaced})
+#qt5_create_translation(QM_FILES ${TS_FILES})
+
 target_link_libraries(${PROJECT_NAME}
         Qt5::Core
         Qt5::Quick
@@ -51,13 +68,13 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::DBus
 )
 
-file(GLOB TS_FILES translations/*.ts)
-qt5_create_translation(QM_FILES ${TS_FILES})
-add_custom_target(translations DEPENDS ${QM_FILES} SOURCES ${TS_FILES})
-add_dependencies(${PROJECT_NAME} translations)
-install(FILES ${QM_FILES} DESTINATION /usr/share/ling-terminal/translations)
 
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION /usr/bin)
+add_custom_target(translations ALL DEPENDS ${QM_FILES})
+
+include(GNUInstallDirs)
+install(FILES ${QM_FILES} DESTINATION  ${CMAKE_INSTALL_DATAROOTDIR}/ling-terminal/translations)
+
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(FILES
     ling-terminal.desktop
