@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(ling-terminal)
+project(lingmo-terminal)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -72,12 +72,12 @@ target_link_libraries(${PROJECT_NAME}
 add_custom_target(translations ALL DEPENDS ${QM_FILES})
 
 include(GNUInstallDirs)
-install(FILES ${QM_FILES} DESTINATION  ${CMAKE_INSTALL_DATAROOTDIR}/ling-terminal/translations)
+install(FILES ${QM_FILES} DESTINATION  ${CMAKE_INSTALL_DATAROOTDIR}/lingmo-terminal/translations)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(FILES
-    ling-terminal.desktop
+    lingmo-terminal.desktop
     DESTINATION /usr/share/applications/
     COMPONENT Runtime
 )

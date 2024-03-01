@@ -1,4 +1,4 @@
-Source: ling-terminal
+Source: lingmo-terminal
 Section: devel
 Priority: optional
 Maintainer: LingmoOS <2422586862@qq.com>
@@ -13,7 +13,7 @@ Build-Depends: cmake,
 Standards-Version: 4.5.0
 Homepage: https://cuteos.cn
 
-Package: ling-terminal
+Package: lingmo-terminal
 Architecture: any
 Depends: qml-module-qtquick-controls2,
          qml-module-qtquick2,
