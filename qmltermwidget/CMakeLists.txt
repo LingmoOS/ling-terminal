@@ -62,19 +62,19 @@ set(TERMWIDGET_SRCS
     src/qmltermwidget_plugin.cpp
 )
 
-add_library(cuteqmltermwidget MODULE
+add_library(lingmoqmltermwidget MODULE
     ${TERMWIDGET_SRCS}
 )
 
-target_link_libraries(cuteqmltermwidget
+target_link_libraries(lingmoqmltermwidget
     Qt5::Core
     Qt5::Quick
     Qt5::Gui
     Qt5::Widgets
 )
 
-install(TARGETS cuteqmltermwidget DESTINATION ${INSTALL_QMLDIR}/Cute/TermWidget)
-install(FILES src/qmldir DESTINATION ${INSTALL_QMLDIR}/Cute/TermWidget)
-install(FILES src/QMLTermScrollbar.qml DESTINATION ${INSTALL_QMLDIR}/Cute/TermWidget)
-install(DIRECTORY lib/color-schemes DESTINATION ${INSTALL_QMLDIR}/Cute/TermWidget)
-install(DIRECTORY lib/kb-layouts DESTINATION ${INSTALL_QMLDIR}/Cute/TermWidget)
+install(TARGETS lingmoqmltermwidget DESTINATION ${INSTALL_QMLDIR}/Lingmo/TermWidget)
+install(FILES src/qmldir DESTINATION ${INSTALL_QMLDIR}/Lingmo/TermWidget)
+install(FILES src/QMLTermScrollbar.qml DESTINATION ${INSTALL_QMLDIR}/Lingmo/TermWidget)
+install(DIRECTORY lib/color-schemes DESTINATION ${INSTALL_QMLDIR}/Lingmo/TermWidget)
+install(DIRECTORY lib/kb-layouts DESTINATION ${INSTALL_QMLDIR}/Lingmo/TermWidget)

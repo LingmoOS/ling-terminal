@@ -48,7 +48,7 @@ LingmoUI.Window {
     //     id: aboutDialog
     //     name: root.title
     //     description: qsTr("LingmoOS terminal simulator")
-    //     iconSource: "image://icontheme/ling-terminal"
+    //     iconSource: "image://icontheme/lingmo-terminal"
     // }
 
     ExitPromptDialog {
