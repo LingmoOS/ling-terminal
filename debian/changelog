@@ -1,10 +1,10 @@
-lingmo-terminal (8.62.2.235) UNRELEASED; urgency=high
+lingmo-terminal (0.8-1) UNRELEASED; urgency=high
 
   * new Name <cuteos@foxmail.com>
 
  -- Floating dream <cuteos@foxmail.com>  Sun, 28 May 2023 15:03:15 +0800
 
-lingmo-terminal (23.02.8) UNRELEASED; urgency=medium
+lingmo-terminal (0.8) UNRELEASED; urgency=medium
 
   * automatic identification of color matching
 
