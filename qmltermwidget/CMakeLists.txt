@@ -71,6 +71,7 @@ target_link_libraries(lingmoqmltermwidget
     Qt5::Quick
     Qt5::Gui
     Qt5::Widgets
+    Qt5::DBus
 )
 
 install(TARGETS lingmoqmltermwidget DESTINATION ${INSTALL_QMLDIR}/Lingmo/TermWidget)

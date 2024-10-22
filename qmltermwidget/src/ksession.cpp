@@ -24,16 +24,34 @@
 #include "ksession.h"
 
 // Qt
-#include <QTextCodec>
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDBusServiceWatcher>
 #include <QDir>
+#include <QTextCodec>
 
 // Konsole
-#include "KeyboardTranslator.h"
 #include "HistorySearch.h"
+#include "KeyboardTranslator.h"
 
-KSession::KSession(QObject *parent) :
-    QObject(parent), m_session(createSession(""))
+static const QString Service = "com.lingmo.Settings";
+static const QString ObjectPath = "/Theme";
+static const QString Interface = "com.lingmo.Theme";
+
+KSession::KSession(QObject* parent)
+    : QObject(parent)
 {
+    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Service, QDBusConnection::sessionBus(),
+                                                                  QDBusServiceWatcher::WatchForRegistration);
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, [=] {
+        initData();
+        initDBusSignals();
+    });
+
+    initDBusSignals();
+    initData();
+
+    m_session = createSession("");
     connect(m_session, SIGNAL(started()), this, SIGNAL(started()));
     connect(m_session, SIGNAL(finished()), this, SLOT(sessionFinished()));
     connect(m_session, SIGNAL(titleChanged()), this, SIGNAL(titleChanged()));
@@ -48,15 +66,34 @@ KSession::~KSession()
     }
 }
 
+void KSession::initData()
+{
+    QDBusInterface iface(Service, ObjectPath, Interface, QDBusConnection::sessionBus(), this);
+
+    if (iface.isValid()) {
+        setDarkBackBackgroundEnabled(iface.property("isDarkMode").toBool());
+        emit darkBackgroundChanged(_enableDarkBackground);
+    }
+}
+
+void KSession::initDBusSignals()
+{
+    QDBusInterface iface(Service, ObjectPath, Interface, QDBusConnection::sessionBus(), this);
+
+    if (iface.isValid()) {
+        QDBusConnection::sessionBus().connect(Service, ObjectPath, Interface, "darkModeChanged",
+                                              this, SLOT([this] (bool status) {this->setDarkBackBackgroundEnabled(status)}));
+    }
+}
+
 void KSession::setTitle(QString name)
 {
     m_session->setTitle(Session::NameRole, name);
 }
 
-
-Session *KSession::createSession(QString name)
+Session* KSession::createSession(QString name)
 {
-    Session *session = new Session();
+    Session* session = new Session();
 
     session->setTitle(Session::NameRole, name);
 
@@ -68,7 +105,7 @@ Session *KSession::createSession(QString name)
      * But as iam not sure if you want to do anything else ill just let both checks in and set this to $SHELL anyway.
      */
 
-    //cool-old-term: There is another check in the code. Not sure if useful.
+    // cool-old-term: There is another check in the code. Not sure if useful.
 
     QString envshell = getenv("SHELL");
     QString shellProg = envshell != NULL ? envshell : "/bin/bash";
@@ -76,7 +113,7 @@ Session *KSession::createSession(QString name)
 
     setenv("TERM", "xterm-256color", 1);
 
-    //session->setProgram();
+    // session->setProgram();
 
     QStringList args("");
     session->setArguments(args);
@@ -87,7 +124,7 @@ Session *KSession::createSession(QString name)
     session->setFlowControlEnabled(true);
     session->setHistoryType(HistoryTypeBuffer(1000));
 
-    session->setDarkBackground(true);
+    session->setDarkBackground(getDarkBackBackgroundEnabled());
 
     session->setKeyBindings("");
 
@@ -97,18 +134,17 @@ Session *KSession::createSession(QString name)
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
-
-int  KSession::getRandomSeed()
+int KSession::getRandomSeed()
 {
     return m_session->sessionId() * 31;
 }
 
-void  KSession::addView(TerminalDisplay *display)
+void KSession::addView(TerminalDisplay* display)
 {
     m_session->addView(display);
 }
 
-void KSession::removeView(TerminalDisplay *display)
+void KSession::removeView(TerminalDisplay* display)
 {
     m_session->removeView(display);
 }
@@ -125,7 +161,7 @@ void KSession::selectionChanged(bool textSelected)
 
 void KSession::startShellProgram()
 {
-    if ( m_session->isRunning() ) {
+    if (m_session->isRunning()) {
         return;
     }
 
@@ -134,7 +170,7 @@ void KSession::startShellProgram()
 
 bool KSession::sendSignal(int signal)
 {
-    if ( !m_session->isRunning() ) {
+    if (!m_session->isRunning()) {
         return false;
     }
 
@@ -146,7 +182,7 @@ int KSession::getShellPID()
     return m_session->processId();
 }
 
-void KSession::changeDir(const QString &dir)
+void KSession::changeDir(const QString& dir)
 {
     /*
        this is a very hackish way of trying to determine if the shell is in
@@ -165,43 +201,43 @@ void KSession::changeDir(const QString &dir)
     }
 }
 
-void KSession::setEnvironment(const QStringList &environment)
+void KSession::setEnvironment(const QStringList& environment)
 {
     m_session->setEnvironment(environment);
 }
 
-
-void KSession::setShellProgram(const QString &progname)
+void KSession::setShellProgram(const QString& progname)
 {
     m_session->setProgram(progname);
 }
 
-void KSession::setInitialWorkingDirectory(const QString &dir)
+void KSession::setInitialWorkingDirectory(const QString& dir)
 {
-    if ( _initialWorkingDirectory != dir ) {
+    if (_initialWorkingDirectory != dir) {
         _initialWorkingDirectory = dir;
         m_session->setInitialWorkingDirectory(dir);
         emit initialWorkingDirectoryChanged();
-}   }
+    }
+}
 
 QString KSession::getInitialWorkingDirectory()
 {
     return _initialWorkingDirectory;
 }
 
-void KSession::setArgs(const QStringList &args)
+void KSession::setArgs(const QStringList& args)
 {
     m_session->setArguments(args);
 }
 
-void KSession::setTextCodec(QTextCodec *codec)
+void KSession::setTextCodec(QTextCodec* codec)
 {
     m_session->setCodec(codec);
 }
 
 void KSession::setHistorySize(int lines)
 {
-    if ( historySize() != lines ) {
+    if (historySize() != lines) {
         if (lines < 0)
             m_session->setHistoryType(HistoryTypeFile());
         else
@@ -212,7 +248,7 @@ void KSession::setHistorySize(int lines)
 
 int KSession::historySize() const
 {
-    if ( m_session->historyType().isUnlimited() ) {
+    if (m_session->historyType().isUnlimited()) {
         return -1;
     } else {
         return m_session->historyType().maximumLineCount();
@@ -243,14 +279,14 @@ void KSession::sendKey(int rep, int key, int mod) const
     Q_UNUSED(key);
     Q_UNUSED(mod);
 
-    //TODO implement or remove this function.
-//    Qt::KeyboardModifier kbm = Qt::KeyboardModifier(mod);
+    // TODO implement or remove this function.
+    //    Qt::KeyboardModifier kbm = Qt::KeyboardModifier(mod);
 
-//    QKeyEvent qkey(QEvent::KeyPress, key, kbm);
+    //    QKeyEvent qkey(QEvent::KeyPress, key, kbm);
 
-//    while (rep > 0){
-//        m_session->sendKey(&qkey);
-//        --rep;
+    //    while (rep > 0){
+    //        m_session->sendKey(&qkey);
+    //        --rep;
     //    }
 }
 
@@ -259,11 +295,11 @@ void KSession::clearScreen()
     m_session->emulation()->clearEntireScreen();
 }
 
-void KSession::search(const QString &regexp, int startLine, int startColumn, bool forwards)
+void KSession::search(const QString& regexp, int startLine, int startColumn, bool forwards)
 {
-    HistorySearch *history = new HistorySearch( QPointer<Emulation>(m_session->emulation()), QRegExp(regexp), forwards, startColumn, startLine, this);
-    connect( history, SIGNAL(matchFound(int,int,int,int)), this, SIGNAL(matchFound(int,int,int,int)));
-    connect( history, SIGNAL(noMatchFound()), this, SIGNAL(noMatchFound()));
+    HistorySearch* history = new HistorySearch(QPointer<Emulation>(m_session->emulation()), QRegExp(regexp), forwards, startColumn, startLine, this);
+    connect(history, SIGNAL(matchFound(int, int, int, int)), this, SIGNAL(matchFound(int, int, int, int)));
+    connect(history, SIGNAL(noMatchFound()), this, SIGNAL(noMatchFound()));
     history->search();
 }
 
@@ -277,7 +313,7 @@ bool KSession::flowControlEnabled()
     return m_session->flowControlEnabled();
 }
 
-void KSession::setKeyBindings(const QString &kb)
+void KSession::setKeyBindings(const QString& kb)
 {
     m_session->setKeyBindings(kb);
     emit changedKeyBindings(kb);
@@ -285,7 +321,7 @@ void KSession::setKeyBindings(const QString &kb)
 
 QString KSession::getKeyBindings()
 {
-   return m_session->keyBindings();
+    return m_session->keyBindings();
 }
 
 QStringList KSession::availableKeyBindings()
@@ -322,7 +358,17 @@ QString KSession::foregroundProcessName()
     return m_session->foregroundProcessName();
 }
 
-QString KSession::currentDir() 
+QString KSession::currentDir()
 {
     return m_session->currentDir();
+}
+
+bool KSession::getDarkBackBackgroundEnabled() const
+{
+    return _enableDarkBackground;
+}
+
+void KSession::setDarkBackBackgroundEnabled(bool status)
+{
+    _enableDarkBackground = status;
 }

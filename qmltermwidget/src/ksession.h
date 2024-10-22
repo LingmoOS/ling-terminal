@@ -43,12 +43,18 @@ class KSession : public QObject
     Q_PROPERTY(bool hasActiveProcess READ hasActiveProcess)
     Q_PROPERTY(QString foregroundProcessName READ foregroundProcessName)
     Q_PROPERTY(QString currentDir READ currentDir)
+    Q_PROPERTY(bool enableDarkBackground READ getDarkBackBackgroundEnabled WRITE setDarkBackBackgroundEnabled NOTIFY darkBackgroundChanged)
 
 public:
     KSession(QObject *parent = 0);
     ~KSession();
 
 public:
+
+    bool getDarkBackBackgroundEnabled() const;
+
+    void setDarkBackBackgroundEnabled(bool status = false);
+
     //bool setup();
     void addView(TerminalDisplay *display);
     void removeView(TerminalDisplay *display);
@@ -111,6 +117,9 @@ public:
      */
     QString currentDir();
 
+    void initData();
+
+    void initDBusSignals();
 signals:
     void started();
     void finished();
@@ -131,6 +140,8 @@ signals:
 
     void matchFound(int startColumn, int startLine, int endColumn, int endLine);
     void noMatchFound();
+
+    void darkBackgroundChanged(bool status);
 
 public slots:
     /*! Set named key binding for given widget
@@ -173,6 +184,8 @@ private:
     //Konsole::KTerminalDisplay *m_terminalDisplay;
     QString _initialWorkingDirectory;
     Session *m_session;
+
+    bool _enableDarkBackground = false; // Indicate wtheter to enable dark background.
 
 };
 
