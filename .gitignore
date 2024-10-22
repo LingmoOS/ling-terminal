@@ -94,3 +94,5 @@ CMakeLists.txt.user*
 debian/.debhelper
 debian/lingmo-terminal/*
 obj-x86_64-linux-gnu
+
+/.cache/
